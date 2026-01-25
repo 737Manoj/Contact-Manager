@@ -1,7 +1,7 @@
 const {constants} = require("../constants");
 const errorHandler = (err, req, res, next) =>{
     const statusCode = res.statusCode ? res.statusCode : 500;
-    
+    res.status(statusCode);
     switch (statusCode) {
         case constants.NOT_FOUND:
             res.json({
@@ -35,7 +35,12 @@ const errorHandler = (err, req, res, next) =>{
                 stackTrace: err.stack
             });
         default:
-            console.log("No errors, All good")
+            console.log("Unhandled Error occurred:", err.name);
+            res.json({
+                title: "Error",
+                message: err.message,
+                stackTrace: err.stack
+            });
             break;
     }
 };
