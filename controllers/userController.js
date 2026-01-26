@@ -9,11 +9,7 @@ const getUsers = asyncHandler(async(req,res) => {
 });
 
 const getUser = asyncHandler(async(req,res) => {
-    const user = await User.findById(req.params.id);
-    if(!user){
-        res.status(404).json({message: "User not found"});
-    }
-        res.status(200).json(user);
+    res.json(req.user);
 });
 
 const registerUser = asyncHandler(async(req, res) => {
@@ -58,7 +54,7 @@ const login = asyncHandler(async(req,res) => {
                 id: user.id,
             },
         }, process.env.SECRET_KEY,
-        {expiresIn: "1m"}
+        {expiresIn: "15m"}
         );
         res.status(200).json({accessToken});
     }else{
